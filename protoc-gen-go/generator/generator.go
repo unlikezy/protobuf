@@ -278,6 +278,13 @@ type FileDescriptor struct {
 	proto3 bool // whether to generate proto3 code for this file
 }
 
+func (d *FileDescriptor) GetPackageName() string {
+	if d != nil {
+		return string(d.packageName)
+	}
+	return ""
+}
+
 // VarName is the variable name we'll use in the generated code to refer
 // to the compressed bytes of this descriptor. It is not exported, so
 // it is only valid inside the generated package.
@@ -2264,7 +2271,7 @@ func (g *Generator) generateMessage(message *Descriptor) {
 			of := oneofField{
 				fieldCommon: fieldCommon{
 					goName:     fname,
-					getterName: "Get"+fname,
+					getterName: "Get" + fname,
 					goType:     dname,
 					tags:       tag,
 					protoName:  odp.GetName(),
